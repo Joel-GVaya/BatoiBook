@@ -18,7 +18,7 @@ describe('function getBookById', () => {
 })
 
 describe('function getBookIndexById', () => {
-  test('getBookIndexById 1 devuelve el Ã­ndice 0', () => {
+  test('getBookIndexById 1 devuelve el índice 0', () => {
     const response = functions.getBookIndexById(books, 1)
     expect(response).toBe(0)
   });
@@ -104,14 +104,14 @@ describe('function booksWithStatus', () => {
 })
 
 describe('function averagePriceOfBooks', () => {
-  test('averagePriceOfBooks devuelve 26.17 â‚¬', () => {
+  test('averagePriceOfBooks devuelve 26.17 €', () => {
     const response = functions.averagePriceOfBooks(books)
-    expect(response).toBe('26.17 â‚¬')
+    expect(response).toBe('26.17 €')
   });
   
-  test('averagePriceOfBooks devuelve 0.00 â‚¬', () => {
+  test('averagePriceOfBooks devuelve 0.00 €', () => {
     const response = functions.averagePriceOfBooks([])
-    expect(response).toBe('0.00 â‚¬')
+    expect(response).toBe('0.00 €')
   });
 })
 
@@ -165,7 +165,7 @@ describe('function getUserById', () => {
 
 
 describe('function getUserIndexById', () => {
-  test('getUserIndexById 3 devuelve el Ã­ndice 1', () => {
+  test('getUserIndexById 3 devuelve el índice 1', () => {
     const response = functions.getUserIndexById(users, 3)
     expect(response).toBe(1)
   });
@@ -187,7 +187,7 @@ describe('function getUserByNickName', () => {
 })
 
 describe('function getModuleByCode', () => {
-  test('getModuleByCode "5021" devuelve el mÃ³dulo con code "5021"', () => {
+  test('getModuleByCode "5021" devuelve el módulo con code "5021"', () => {
     const response = functions.getModuleByCode(modules, '5021')
     expect(response.code).toBe('5021')
   });
