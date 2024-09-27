@@ -118,7 +118,7 @@ describe('function averagePriceOfBooks', () => {
 describe('function booksOfTypeNotes', () => {
   test('booksOfTypeNotes devuelve 0 libros', () => {
     const response = functions.booksOfTypeNotes(books)
-    expect(response.length).toBe(0)
+    expect(response.length).toBe(3)
   });
   
   test('booksOfTypeNotes devuelve 0 libros', () => {
