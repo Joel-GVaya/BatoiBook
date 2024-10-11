@@ -1,11 +1,13 @@
-import Module from './module.class'
+import Module from './module.class';
+import { getDBModules } from '../services/modules.api';
 
-class Modules {
+export default class Modules {
     constructor() {
         this.data = [];
     }
 
-    populate(modulesArray) {
+    async populate() {
+        const modulesArray = await getDBModules();
         this.data = modulesArray.map(moduleData => new Module(moduleData.code, moduleData.cliteral, moduleData.vliteral, moduleData.courseId));
     }
 
@@ -20,10 +22,4 @@ class Modules {
         }
         return module;
     }
-
-
-
-    
 }
-
-export default Modules;

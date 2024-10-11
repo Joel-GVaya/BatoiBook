@@ -1,93 +1,63 @@
 import Book from './book.class';
+import {
+    getDBBooks,
+    getDBBook,
+    addDBBook,
+    removeDBBook,
+    changeDBBook
+} from '../services/books.api';
 
 export default class Books {
     constructor() {
-        this.data = []; 
+        this.data = [];
         this.nextId = 0;
     }
 
-    populate(initialData) {
+    async populate() {
+        const initialData = await getDBBooks();
         this.nextId = Math.max(...initialData.map(item => item.id), 0) + 1;
         this.data = initialData.map(item => new Book({ id: item.id, ...item }));
     }
-    
-    addBook(bookData) {
-        const newBook = new Book({ id: this.nextId++, ...bookData });
+
+    async addBook(bookData) {
+        const addedBook = await addDBBook(bookData);
+        const newBook = new Book({ ...addedBook });
         this.data.push(newBook);
         return newBook;
     }
 
-    removeBook(bookId) {
-        const index = this.data.findIndex(book => book.id === bookId);
-        if (index === -1) {
-            throw new Error(`No de ha encontrado el libro`);
-        }
-        this.data.splice(index, 1);
+
+    async removeBook(bookId) {
+        await removeDBBook(bookId);
+        this.data = this.data.filter(book => book.id !== bookId);
     }
 
-    changeBook(updatedBookData) {
-        const index = this.getBookIndexById(updatedBookData.id);
-        if (index === -1) {
-            throw new Error(`No se ha encontrado el libro.`);
-        }
-        const updatedBook = new Book({ ...this.data[index], ...updatedBookData });
-        this.data[index] = updatedBook;
-        return updatedBook;
+    async changeBook(updatedBookData) {
+        const updatedBook = await changeDBBook(updatedBookData);
+        const index = this.getBookIndexById(updatedBook.id);
+        const modifiedBook = new Book(updatedBook);
+        this.data[index] = modifiedBook;
+        return modifiedBook;
     }
 
-    toString() {
-        return this.data.map(book => book.toString()).join('\n');
+    bookExists(id, moduleCode) {
+        return this.data.some(book => book.id === id && book.moduleCode === moduleCode);
     }
-    
+
+
     getBookById(bookId) {
         const book = this.data.find(book => book.id === bookId);
         if (!book) {
-            throw new Error(`No se ha encontrado el libro.`);
+            throw new Error(`No se ha encontrado el libro con ID: ${bookId}`);
         }
         return book;
     }
-    
+
+
     getBookIndexById(bookId) {
-        const book = this.data.findIndex(book => book.id === bookId);
-        if(book === -1){
-            throw new Error('No se ha encontrado el libro');
-        }
-        return book;
-    }
-
-    bookExists(id, module) {
-        return !!this.data.some(book => book.userId === id && book.moduleCode === module);
-    }
-
-    booksFromUser(userId) {
-        return this.data.filter(book => book.userId === userId);
-    }
-
-    booksFromModule(module){
-        return this.data.filter(book => book.moduleCode === module);
-    }
-
-    booksCheeperThan(number){
-        return this.data.filter(book => book.price <= number);
-    }
-
-    booksWithStatus(status) {
-        return this.data.filter(book => book.status === status);
-    }
-
-    averagePriceOfBooks() {
-        if (this.data.length === 0) return '0.00 €';
-        const totalPrice = this.data.reduce((sum, book) => sum + book.price, 0);
-        const average = totalPrice / this.data.length;
-        return `${average.toFixed(2)} €`;
-    }
-
-    booksOfTypeNotes() {
-        return this.data.filter(book => book.publisher === 'Apunts');
-    }
-
-    booksNotSold() {
-        return this.data.filter(book => book.soldDate === '');
+        const index = this.data.findIndex(book => book.id === bookId);
+        if (index === -1) throw new Error('No se ha encontrado el libro');
+        return index;
     }
 
     incrementPriceOfbooks(percent) {
@@ -97,6 +67,35 @@ export default class Books {
         });
     }
 
-    
+    booksNotSold() {
+        return this.data.filter(book => book.status !== 'sold');
+    }
 
+    booksOfTypeNotes() {
+        return this.data.filter(book => book.moduleCode === 'ABCD');
+    }
+
+    averagePriceOfBooks() {
+        if (this.data.length === 0) return '0.00 €';
+
+        const total = this.data.reduce((acc, book) => acc + book.price, 0);
+        const average = total / this.data.length;
+        return `${average.toFixed(2)} €`;
+    }
+
+    booksWithStatus(status) {
+        return this.data.filter(book => book.status === status);
+    }
+
+    booksCheeperThan(price) {
+        return this.data.filter(book => book.price < price);
+    }
+
+    booksFromModule(moduleCode) {
+        return this.data.filter(book => book.moduleCode === moduleCode);
+    }
+
+    booksFromUser(userId) {
+        return this.data.filter(book => book.userId === userId);
+    }
 }
