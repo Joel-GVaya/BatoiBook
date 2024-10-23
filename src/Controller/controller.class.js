@@ -1,5 +1,4 @@
-import './style.css';
-import Books from './src/model/books.class';
+import Books from '../model/books.class';
 
 export default class Controller {
     constructor() {
@@ -96,5 +95,7 @@ export default class Controller {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const myController = new Controller();
+    const controller = new Controller();
 });
+
+

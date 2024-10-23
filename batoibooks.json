@@ -2137,6 +2137,18 @@
       "comments": "Sense obrir",
       "soldDate": "",
       "id": "6"
+    },
+    {
+      "id": "8",
+      "userId": 1,
+      "moduleCode": "5252",
+      "publisher": "joel",
+      "price": "100",
+      "pages": "500",
+      "status": "new",
+      "comments": "Holaaa",
+      "soldDate": "",
+      "photo": ""
     }
   ]
 }
