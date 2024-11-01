@@ -144,3 +144,17 @@ footer p {
 div a {
   color: #fff;
 }
+
+button{
+  border-radius: 5px;
+  border-color: green;
+  background-color: #acabab;
+}
+
+.id{
+  display: none;
+}
+
+.id1{
+  display: block;
+}

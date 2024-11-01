@@ -6,91 +6,17 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>BatoiBooks Joel</title>
 </head>
 
 <body>
-  <script type="module" src="./src/Controller/controller.class.js"></script>
+  <script src="./main.js" type="module"></script>
   <header>
     <div id="app">
-      <a>
-        <img src="logoBatoi.png" class="logo" alt="BatoiBooks logo" />
-      </a>
-      <h1>BatoiBooks</h1>
+      <!-- Todo el código va en el main.js -->
     </div>
-    <nav>
-      <ul>
-        <li><a href="#list">Ver Libros</a></li>
-        <li><a href="#form">Añadir Libro</a></li>
-        <li><a href="#about">Acerca de...</a></li>
-      </ul>
-    </nav>
   </header>
-
-  <div class="mensajes" id="messages">
-  </div>
-
-  <main>
-    <div id="list">
-
-      <a>Libros</a>
-      <!-- Aquí se mostrará la lista de libros -->
-    </div>
-    <div>
-        <form id="eliminarLibro">
-            <div>
-                <label for="id-remove">Id:</label>
-                <input type="number" id="libroEliminar">
-                <button id="remove">Borrar libro</button>
-            </div>
-        </form>
-      <form id="anadirLibro">
-        <div>
-          <label for="id-module">Módulo:</label>
-          <select id="id-module">
-            <option>5252</option>
-            <option>4343</option>
-            <option>7676</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="publisher">Editorial:</label>
-          <input type="text" id="publisher" required>
-        </div>
-
-        <div>
-          <label for="price">Precio:</label>
-          <input type="number" id="price" required>
-        </div>
-
-        <div>
-          <label for="pages">Páginas:</label>
-          <input type="number" id="pages" required>
-        </div>
-
-        <div>
-          <label>Estado:</label>
-          <input type="radio" name="estado" value="new"> New
-          <input type="radio" name="estado" value="good"> Good
-          <input type="radio" name="estado" value="bad"> Bad
-        </div>
-
-        <div>
-          <label for="comments">Comentarios:</label>
-          <textarea id="comments"></textarea>
-        </div>
-
-        <button type="submit">Añadir</button>
-        <button type="reset">Reset</button>
-      </form>
-    </div>
-  </main>
-
-  <footer>
-    <p>Creado por Joel</p>
-  </footer>
-
 </body>
 
 </html>

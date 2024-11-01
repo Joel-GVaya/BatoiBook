@@ -2127,18 +2127,6 @@
   ],
   "books": [
     {
-      "userId": 3,
-      "moduleCode": "5021",
-      "publisher": "McGraw-Hill",
-      "price": 75,
-      "pages": 273,
-      "status": "new",
-      "photo": "",
-      "comments": "Sense obrir",
-      "soldDate": "",
-      "id": "6"
-    },
-    {
       "id": "8",
       "userId": 1,
       "moduleCode": "5252",
