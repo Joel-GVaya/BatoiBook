@@ -2137,6 +2137,24 @@
       "comments": "Holaaa",
       "soldDate": "",
       "photo": ""
+    },
+    {
+      "id": "336f",
+      "moduleCode": "0045",
+      "publisher": "aa",
+      "price": 1,
+      "pages": 2,
+      "status": "new",
+      "comments": ""
+    },
+    {
+      "id": "2ac6",
+      "moduleCode": "0045",
+      "publisher": "a",
+      "price": 10,
+      "pages": 10,
+      "status": "good",
+      "comments": "a"
     }
   ]
 }

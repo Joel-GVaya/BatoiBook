@@ -4,7 +4,8 @@ import {
     getDBBook,
     addDBBook,
     removeDBBook,
-    changeDBBook
+    changeDBBook,
+    getModuleUsed
 } from '../services/books.api';
 
 export default class Books {
@@ -20,10 +21,14 @@ export default class Books {
     }
 
     async addBook(bookData) {
-        const newBook = new Book({bookData});
-        const addedBook = await addDBBook(bookData);
-        this.data.push(newBook);
-        return newBook;
+        const valid = await getModuleUsed(bookData.id, bookData.moduleCode);
+        if (valid) {
+            const newBook = new Book({ bookData });
+            const addedBook = await addDBBook(bookData);
+            this.data.push(newBook);
+            return newBook;
+        }
+        return null
     }
 
 

@@ -31,17 +31,28 @@ export default class Controller {
     }
 
     async handleSubmitBook(payload) {
-        if (payload.id){
-            console.log('Se edita libro')
+        const validationErrors = this.validateBookForm(payload);
+
+        if (validationErrors.length > 0) {
+            validationErrors.forEach(error => this.view.renderMessage("error", error));
+            return;
+        }
+
+        if (payload.id) {
+            console.log('Se edita libro');
             try {
                 const book = await this.model.books.changeBook(payload);
-                this.view.renderEditedBook(book);
-                this.view.renderMessage("info", 'Libro editado correctamente');
+                if (book) {
+                    this.view.renderEditedBook(book);
+                    this.view.renderMessage("info", 'Libro editado correctamente');
+                }else{
+                    this.view.renderMessage("info", 'El modulo ya ha sido utilizado, no se puede volver a utilizar')
+                }
             } catch (error) {
                 console.log(error);
             }
-        }else {
-            console.log('Se crea un nuevo libro')
+        } else {
+            console.log('Se crea un nuevo libro');
             try {
                 const book = await this.model.books.addBook(payload);
                 this.view.renderBook(book, this.handleActionBook.bind(this));
@@ -51,7 +62,35 @@ export default class Controller {
             }
         }
     }
-    
+
+    validateBookForm(payload) {
+        const errors = [];
+
+        if (payload.idModule === "- Selecciona un módulo -") {
+            errors.push("El módulo es obligatorio.");
+        }
+
+        if (!payload.publisher || payload.publisher.trim() === "") {
+            errors.push("La editorial es obligatoria.");
+        }
+s
+        if (payload.price === undefined || payload.price === null || isNaN(payload.price) || payload.price <= 0) {
+            errors.push("El precio es obligatorio, debe ser un número y mayor o igual que 0.");
+        }
+
+
+        if (payload.pages === undefined || payload.pages === null || isNaN(payload.pages) || payload.pages <= 0 || !Number.isInteger(Number(payload.pages))) {
+            errors.push("El número de páginas es obligatorio, debe ser un número entero y mayor o igual que 0.");
+        }
+
+        if (!payload.status) {
+            errors.push("El estado es obligatorio.");
+        }
+
+        return errors;
+    }
+
+
 
     handleRemoveBook(id) {
         this.model.books.removeBook(id)
@@ -65,8 +104,8 @@ export default class Controller {
     }
 
     handleEditBook(id) {
-     const book = this.model.books.getBookById(id)
-     this.view.renderEditBook(book)
+        const book = this.model.books.getBookById(id)
+        this.view.renderEditBook(book)
     }
 
     handleActionBook(action, id) {

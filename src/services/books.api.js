@@ -50,3 +50,13 @@ export const changeDBBook = async (updatedBook) => {
     throw error;
   }
 };
+
+export const getModuleUsed = async (userId, moduleCode) => {
+  try {
+    const response = await axios.get(`${API_URL}?userId=${userId}&moduleCode=${moduleCode}`);
+    return response.data.length > 0;
+  } catch (error) {
+    console.error(`Error al verificar si el módulo con userId ${userId} y moduleCode ${moduleCode} está en uso:`, error);
+    throw error;
+  }
+}
