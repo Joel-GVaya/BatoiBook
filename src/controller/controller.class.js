@@ -31,12 +31,12 @@ export default class Controller {
     }
 
     async handleSubmitBook(payload) {
-        const validationErrors = this.validateBookForm(payload);
+        /*const validationErrors = this.validateBookForm(payload);
 
         if (validationErrors.length > 0) {
             validationErrors.forEach(error => this.view.renderMessage("error", error));
             return;
-        }
+        }*/
 
         if (payload.id) {
             console.log('Se edita libro');

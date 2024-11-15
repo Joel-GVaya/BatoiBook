@@ -43,7 +43,7 @@ export default class View {
 
     renderEditedBook(book) {
         const bookUI = document.querySelector(`[alt="Libro: ${book.id}"]`);
-        
+
         if (bookUI) {
             bookUI.innerHTML = `
             <img src="${book.photo}" alt="Libro: ${book.id}">
@@ -65,13 +65,13 @@ export default class View {
                     <span class="material-icons">delete</span>
                 </button>
             </div>`;
-            
+
             bookUI.querySelector(`.carrito`).addEventListener('click', () => this.handleActionBook('cart', book.id));
             bookUI.querySelector(`.delete`).addEventListener('click', () => this.handleActionBook('delete', book.id));
             bookUI.querySelector(`.editar`).addEventListener('click', () => this.handleActionBook('edit', book.id));
         }
     }
-    
+
 
 
     renderBook(book, callback) {
@@ -135,7 +135,24 @@ export default class View {
     setBookSubmitHandler(callback) {
         this.bookForm.addEventListener('submit', (event) => {
             event.preventDefault();
-    
+
+            const fieldsIds = [ 'id-module', 'publisher', 'price', 'pages', 'status'];
+
+            fieldsIds.forEach((fieldsid) => {
+                const field = document.getElementById(fieldsid);
+                const spanError = field.closest('div').querySelector('span.error');
+                if (!field.checkValidity()) {
+                    spanError.textContent = field.validationMessage;
+                }
+            })
+
+
+
+
+            if (!this.bookForm.checkValidity()) {
+                return;
+            }
+
             const id = document.getElementById('book-id')?.value;
             const moduleCode = document.getElementById('id-module').value;
             const publisher = document.getElementById('publisher').value;
@@ -143,7 +160,7 @@ export default class View {
             const pages = parseInt(document.getElementById('pages').value, 10);
             const status = document.querySelector('input[name="status"]:checked')?.value;
             const comments = document.getElementById('comments').value;
-    
+
             // Crear formData
             const formData = {
                 moduleCode,
@@ -153,17 +170,17 @@ export default class View {
                 status,
                 comments
             };
-    
+
             // Si el ID tiene valor, agregarlo al formData
             if (id) {
                 formData.id = id; // Agregar id al objeto existente
             }
-    
+
             // Llama al callback con formData
             callback(formData);
         });
     }
-    
+
 
     renderEditBook(book) {
         this.renderViewEditBook()
